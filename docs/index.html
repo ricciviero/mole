@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Mole — Deep clean and optimize your Mac</title>
-<meta name="description" content="Open-source macOS CLI to deep-clean caches, prune Docker safely, and rotate Claude Code / Codex / Cursor session data. Reclaim 10+ GB in one command." />
+<title>Mole — Reclaim disk from Docker and AI coding agents on macOS</title>
+<meta name="description" content="Open-source macOS CLI built for developers. Prunes Docker images and build cache without touching volumes, rotates Claude Code, Codex and Cursor session data, and cleans the rest of your Mac as a bonus. Reclaim 10+ GB in one command." />
 <meta name="theme-color" content="#0a0a0a" />
 
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Mole — Deep clean and optimize your Mac" />
-<meta property="og:description" content="One CLI for caches, Docker prune (volume-safe), and AI agents cleanup. Reclaim 10+ GB." />
+<meta property="og:title" content="Mole — Reclaim disk from Docker and AI coding agents on macOS" />
+<meta property="og:description" content="Volume-safe Docker prune + Claude / Codex / Cursor cleanup, plus a full macOS deep-clean as a bonus." />
 <meta property="og:url" content="https://github.com/ricciviero/Mole" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -47,14 +47,14 @@
   <section class="hero">
     <div class="container">
       <h1 class="hero-title">
-        Deep clean and<br />
-        optimize your <span class="accent">Mac</span>.
+        Reclaim the disk that<br />
+        <span class="accent">Docker</span> and <span class="accent">AI agents</span> quietly eat.
       </h1>
 
       <p class="hero-sub">
-        All-in-one open-source CLI for macOS. Prune Docker without touching volumes,
-        rotate Claude Code / Codex / Cursor session data, and reclaim
-        <strong>10+ GB</strong> in one command.
+        A macOS CLI built for developers. Prunes Docker without touching volumes, rotates
+        <strong>Claude Code/Desktop, Codex and Cursor</strong> session data and sandbox VMs, and
+        deep-cleans the rest of your Mac as a bonus. <strong>10+ GB</strong> back in one command.
       </p>
 
       <div class="install-box" role="region" aria-label="Install command">
@@ -81,13 +81,34 @@
   <section id="features" class="section">
     <div class="container">
       <header class="section-head">
-        <p class="eyebrow">Features</p>
-        <h2>Everything in a single binary.</h2>
+        <p class="eyebrow">What it does</p>
+        <h2>Built for devs who live with <span class="accent">Docker</span> and AI coding agents.</h2>
         <p class="section-sub">
-          Replaces CleanMyMac, AppCleaner, DaisyDisk, and iStat Menus — and adds container &amp; AI-agent
-          cleanup the upstream doesn't cover.
+          Two cleaners no other macOS tool does well — volume-safe Docker prune and full rotation of
+          Claude/Codex/Cursor session data — wrapped in a deep-clean toolkit that replaces CleanMyMac,
+          AppCleaner, DaisyDisk and iStat Menus as a side effect.
         </p>
       </header>
+
+      <ul class="features-grid features-grid-primary" role="list">
+        <li class="feature">
+          <div class="feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="4" height="4"/><rect x="8" y="11" width="4" height="4"/><rect x="13" y="11" width="4" height="4"/><rect x="8" y="6" width="4" height="4"/><rect x="13" y="6" width="4" height="4"/><path d="M2 18c2 1 5 2 9 2 7 0 11-4 12-8"/></svg>
+          </div>
+          <h3>Docker, without losing your DB</h3>
+          <p>Runs <code>system</code>, <code>image</code> and <code>builder</code> prune in one shot. <strong>Never touches volumes</strong>, so Postgres, Redis and friends stay intact. Typical reclaim: 10–50 GB.</p>
+        </li>
+        <li class="feature">
+          <div class="feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+          <h3>AI agents that don&rsquo;t hoard</h3>
+          <p>Rotates session transcripts, sandbox VMs, plugin caches and the chroma vector DB for
+          <strong>Claude Code/Desktop, Codex CLI and Cursor</strong>. Preserves auth, memories, installed skills and extensions.</p>
+        </li>
+      </ul>
+
+      <p class="features-divider" aria-hidden="true">And the deep-clean toolkit that comes with it</p>
 
       <ul class="features-grid" role="list">
         <li class="feature">
@@ -125,22 +146,6 @@
           <h3>Live monitoring</h3>
           <p>Real-time CPU, GPU, memory, disk, and network in the terminal.</p>
         </li>
-        <li class="feature feature-new">
-          <div class="feature-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="4" height="4"/><rect x="8" y="11" width="4" height="4"/><rect x="13" y="11" width="4" height="4"/><rect x="8" y="6" width="4" height="4"/><rect x="13" y="6" width="4" height="4"/><path d="M2 18c2 1 5 2 9 2 7 0 11-4 12-8"/></svg>
-          </div>
-          <span class="feature-badge">New</span>
-          <h3>Docker hygiene</h3>
-          <p>System / image / build prune — <strong>never touches volumes</strong>, so DB data stays safe.</p>
-        </li>
-        <li class="feature feature-new">
-          <div class="feature-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10"/></svg>
-          </div>
-          <span class="feature-badge">New</span>
-          <h3>AI agents cleanup</h3>
-          <p>Rotates session logs and sandbox VMs for Claude Code/Desktop, Codex CLI, Cursor — preserves auth and memories.</p>
-        </li>
       </ul>
     </div>
   </section>
@@ -149,11 +154,11 @@
   <section id="cleaned" class="section section-alt">
     <div class="container">
       <header class="section-head">
-        <p class="eyebrow">Under the hood</p>
-        <h2>What the fork adds on top of <code>mo clean</code>.</h2>
+        <p class="eyebrow">Where the gigabytes hide</p>
+        <h2>The paths your tools never tell you about.</h2>
         <p class="section-sub">
-          The cleaner skips anything irreplaceable (auth tokens, memories, installed skills, Docker volumes).
-          These are the paths it rotates.
+          Sandbox disk images, vector DBs, archived sessions, Electron caches. The cleaner skips anything
+          irreplaceable — auth tokens, your memories, installed skills, Docker volumes.
         </p>
       </header>
 

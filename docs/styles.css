@@ -363,6 +363,49 @@ button { font: inherit; cursor: pointer; }
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: var(--s-4);
 }
+.features-grid-primary {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  margin-bottom: var(--s-7);
+}
+.features-grid-primary .feature {
+  padding: var(--s-6);
+  border-color: var(--accent-line);
+  background:
+    linear-gradient(180deg, rgba(34, 197, 94, 0.04) 0%, var(--bg-elev) 60%);
+}
+.features-grid-primary .feature h3 {
+  font-size: 1.18rem;
+}
+.features-grid-primary .feature p {
+  font-size: 0.98rem;
+}
+.features-grid-primary .feature p code {
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.88em;
+}
+.features-divider {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-dimmer);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 var(--s-5);
+  position: relative;
+}
+.features-divider::before,
+.features-divider::after {
+  content: '';
+  display: inline-block;
+  width: clamp(24px, 8vw, 80px);
+  height: 1px;
+  vertical-align: middle;
+  background: var(--border);
+  margin: 0 var(--s-3);
+}
 .feature {
   position: relative;
   padding: var(--s-5);
@@ -410,21 +453,6 @@ button { font: inherit; cursor: pointer; }
   margin: 0;
 }
 .feature p strong { color: var(--text); font-weight: 600; }
-.feature-new { border-color: var(--accent-line); }
-.feature-badge {
-  position: absolute;
-  top: var(--s-4);
-  right: var(--s-4);
-  padding: 2px 8px;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--accent);
-  background: var(--accent-soft);
-  border: 1px solid var(--accent-line);
-  border-radius: 999px;
-}
 
 /* ============================================================
    Paths table
