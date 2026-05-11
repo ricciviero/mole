@@ -8,12 +8,6 @@
   <a href="https://github.com/ricciviero/Mole/releases"><img src="https://img.shields.io/github/v/tag/ricciviero/Mole?label=version&style=flat-square" alt="Version"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License"></a>
   <a href="https://github.com/ricciviero/Mole/commits"><img src="https://img.shields.io/github/commit-activity/m/ricciviero/Mole?style=flat-square" alt="Commits"></a>
-  <a href="https://twitter.com/HiTw93"><img src="https://img.shields.io/badge/follow-Tw93-red?style=flat-square&logo=Twitter" alt="Twitter"></a>
-  <a href="https://t.me/+GclQS9ZnxyI2ODQ1"><img src="https://img.shields.io/badge/chat-Telegram-blueviolet?style=flat-square&logo=Telegram" alt="Telegram"></a>
-</p>
-
-<p align="center">
-  <img src="https://gw.alipayobjects.com/zos/k/ro/ZzF8e8.png" alt="Mole - 95.50GB freed" width="1000" />
 </p>
 
 ## Features
@@ -91,7 +85,6 @@ Review [SECURITY.md](SECURITY.md) and [SECURITY_AUDIT.md](SECURITY_AUDIT.md) for
 
 ## Tips
 
-- Video tutorial: Watch the [Mole tutorial video](https://www.youtube.com/watch?v=UEe9-w4CcQ0), thanks to PAPAYA 電腦教室.
 - Safety and logs: `clean`, `uninstall`, `purge`, `installer`, and `remove` are destructive. Review with `--dry-run` first, and add `--debug` when needed. File operations are logged to `~/Library/Logs/mole/operations.log`. Disable with `MO_NO_OPLOG=1`. Review [SECURITY.md](SECURITY.md) and [SECURITY_AUDIT.md](SECURITY_AUDIT.md).
 - App leftovers: use `mo clean` when the app is already uninstalled, and `mo uninstall` when the app is still installed.
 - Navigation: Mole supports arrow keys and Vim bindings `h/j/k/l`.
@@ -338,28 +331,18 @@ After running the script, complete these steps in Raycast:
 
 ### Terminal Detection
 
-Mole auto-detects your terminal app. iTerm2 has known compatibility issues. We highly recommend [Kaku](https://github.com/tw93/Kaku). Other good options are Alacritty, kitty, WezTerm, Ghostty, and Warp. To override, set `MO_LAUNCHER_APP=<name>`.
+Mole auto-detects your terminal app. iTerm2 has known compatibility issues. Recommended terminals: Alacritty, kitty, WezTerm, Ghostty, Warp. To override, set `MO_LAUNCHER_APP=<name>`.
 
-## Community Love
-
-Thanks to everyone who helped build Mole. Go follow them. ❤️
+## Contributors
 
 <a href="https://github.com/ricciviero/Mole/graphs/contributors">
   <img src="./CONTRIBUTORS.svg?v=2" width="1000" />
 </a>
 
-<br/><br/>
-Real feedback from users who shared Mole on X.
-
-<img src="https://gw.alipayobjects.com/zos/k/dl/lovemole.jpeg" alt="Community feedback on Mole" width="1000" />
-
 ## Support
 
-- If Mole helped you, [share it](https://twitter.com/intent/tweet?url=https://github.com/ricciviero/Mole&text=Mole%20-%20Deep%20clean%20and%20optimize%20your%20Mac.) with friends or give it a star.
-- Got ideas or bugs? Open an issue or PR, feel free to contribute your best AI model.
-- I have two cats, TangYuan and Coke. If you think Mole delights your life, you can feed them <a href="https://cats.tw93.fun?name=Mole" target="_blank">canned food 🥩</a>.
-
-<a href="https://cats.tw93.fun?name=Mole"><img src="https://cdn.jsdelivr.net/gh/tw93/sponsors@main/assets/sponsors.svg" width="1000" loading="lazy" /></a>
+- If Mole helped you, [share it](https://github.com/ricciviero/Mole) with friends or give it a star.
+- Got ideas or bugs? Open an issue or PR — contributions welcome.
 
 ## Credits
 
