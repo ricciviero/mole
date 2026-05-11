@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mole — Deep clean and optimize your Mac</title>
+<meta name="description" content="Open-source macOS CLI to deep-clean caches, prune Docker safely, and rotate Claude Code / Codex / Cursor session data. Reclaim 10+ GB in one command." />
+<meta name="theme-color" content="#0a0a0a" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Mole — Deep clean and optimize your Mac" />
+<meta property="og:description" content="One CLI for caches, Docker prune (volume-safe), and AI agents cleanup. Reclaim 10+ GB." />
+<meta property="og:url" content="https://github.com/ricciviero/Mole" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0a'/%3E%3Ctext x='50%25' y='54%25' font-family='monospace' font-weight='700' font-size='32' fill='%2322c55e' text-anchor='middle' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E" />
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-header" role="banner">
+  <div class="container header-inner">
+    <a href="#" class="logo" aria-label="Mole home">
+      <span class="logo-mark" aria-hidden="true">▮</span>
+      <span class="logo-text">mole</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#features">Features</a>
+      <a href="#cleaned">What gets cleaned</a>
+      <a href="#install">Install</a>
+      <a href="https://github.com/ricciviero/Mole" target="_blank" rel="noopener" class="nav-cta">
+        GitHub <span class="external" aria-hidden="true">↗</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="chips" aria-label="Project tags">
+        <span class="chip">macOS</span>
+        <span class="chip">CLI</span>
+        <span class="chip">MIT</span>
+        <span class="chip chip-accent">v1.39.1</span>
+      </div>
+
+      <h1 class="hero-title">
+        Deep clean and<br />
+        optimize your <span class="accent">Mac</span>.
+      </h1>
+
+      <p class="hero-sub">
+        All-in-one open-source CLI for macOS. Prune Docker without touching volumes,
+        rotate Claude Code / Codex / Cursor session data, and reclaim
+        <strong>10+ GB</strong> in one command.
+      </p>
+
+      <div class="install-box" role="region" aria-label="Install command">
+        <div class="install-prompt" aria-hidden="true">$</div>
+        <code id="install-cmd" class="install-cmd">curl -fsSL https://raw.githubusercontent.com/ricciviero/Mole/main/install.sh | bash</code>
+        <button id="copy-btn" class="copy-btn" type="button" aria-label="Copy install command to clipboard">
+          <span class="copy-label">Copy</span>
+          <span class="copy-icon" aria-hidden="true">⧉</span>
+        </button>
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://github.com/ricciviero/Mole" target="_blank" rel="noopener">
+          View on GitHub <span aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/ricciviero/Mole/releases" target="_blank" rel="noopener">
+          Releases
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="section">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow">Features</p>
+        <h2>Everything in a single binary.</h2>
+        <p class="section-sub">
+          Replaces CleanMyMac, AppCleaner, DaisyDisk, and iStat Menus — and adds container &amp; AI-agent
+          cleanup the upstream doesn't cover.
+        </p>
+      </header>
+
+      <ul class="features-grid" role="list">
+        <li class="feature">
+          <div class="feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </div>
+          <h3>All-in-one toolkit</h3>
+          <p>Clean, uninstall, optimize, analyze, status — all from one binary.</p>
+        </li>
+        <li class="feature">
+          <div class="feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14"/><path d="M10 11v6M14 11v6"/></svg>
+          </div>
+          <h3>Deep cleaning</h3>
+          <p>Caches, logs, browser leftovers, orphaned app data. Whitelist-aware.</p>
+        </li>
+        <li class="feature">
+          <div class="feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M9 10l6 4M15 10l-6 4"/></svg>
+          </div>
+          <h3>Smart uninstaller</h3>
+          <p>Removes apps with launch agents, prefs, and hidden remnants.</p>
+        </li>
+        <li class="feature">
+          <div class="feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 20V10M10 20V6M15 20v-8M20 20v-4"/></svg>
+          </div>
+          <h3>Disk insights</h3>
+          <p>Interactive TUI that visualizes usage and pinpoints large files.</p>
+        </li>
+        <li class="feature">
+          <div class="feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2-6 4 12 3-9 2 4h4"/></svg>
+          </div>
+          <h3>Live monitoring</h3>
+          <p>Real-time CPU, GPU, memory, disk, and network in the terminal.</p>
+        </li>
+        <li class="feature feature-new">
+          <div class="feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="4" height="4"/><rect x="8" y="11" width="4" height="4"/><rect x="13" y="11" width="4" height="4"/><rect x="8" y="6" width="4" height="4"/><rect x="13" y="6" width="4" height="4"/><path d="M2 18c2 1 5 2 9 2 7 0 11-4 12-8"/></svg>
+          </div>
+          <span class="feature-badge">New</span>
+          <h3>Docker hygiene</h3>
+          <p>System / image / build prune — <strong>never touches volumes</strong>, so DB data stays safe.</p>
+        </li>
+        <li class="feature feature-new">
+          <div class="feature-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+          <span class="feature-badge">New</span>
+          <h3>AI agents cleanup</h3>
+          <p>Rotates session logs and sandbox VMs for Claude Code/Desktop, Codex CLI, Cursor — preserves auth and memories.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- WHAT GETS CLEANED -->
+  <section id="cleaned" class="section section-alt">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow">Under the hood</p>
+        <h2>What the fork adds on top of <code>mo clean</code>.</h2>
+        <p class="section-sub">
+          The cleaner skips anything irreplaceable (auth tokens, memories, installed skills, Docker volumes).
+          These are the paths it rotates.
+        </p>
+      </header>
+
+      <div class="table-wrap" role="region" aria-label="Paths cleaned by Mole" tabindex="0">
+        <table class="paths-table">
+          <thead>
+            <tr>
+              <th scope="col">Path</th>
+              <th scope="col">What it holds</th>
+              <th scope="col">Typical size</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>~/Library/Application Support/Claude/vm_bundles</code></td>
+              <td>Claude Desktop sandbox VM (rootfs + sessiondata)</td>
+              <td class="size size-xl">~10 GB</td>
+            </tr>
+            <tr>
+              <td><code>~/.claude/projects</code></td>
+              <td>Claude Code session transcripts (JSONL)</td>
+              <td class="size size-lg">500 MB+</td>
+            </tr>
+            <tr>
+              <td><code>~/.codex/archived_sessions</code></td>
+              <td>Codex CLI archived sessions</td>
+              <td class="size size-lg">600 MB+</td>
+            </tr>
+            <tr>
+              <td><code>~/.cache/chroma</code></td>
+              <td>claude-mem vector database</td>
+              <td class="size size-md">~150 MB</td>
+            </tr>
+            <tr>
+              <td><code>~/Library/Application Support/Cursor/Cache</code></td>
+              <td>Cursor Electron HTTP/GPU cache</td>
+              <td class="size size-sm">tens of MB</td>
+            </tr>
+            <tr>
+              <td><code>docker system / image / builder prune</code></td>
+              <td>Stopped containers, unused images, build cache</td>
+              <td class="size size-lg">10–50 GB</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="note">
+        <strong>Never touched:</strong> Docker volumes · <code>~/.claude/memory</code> ·
+        <code>~/.claude/plugins/data</code> · <code>~/.claude/skills</code> ·
+        Cursor <code>extensions/</code> &amp; <code>User/</code> settings · Codex auth.
+      </p>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="install" class="section">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow">Get started</p>
+        <h2>Install in one line.</h2>
+        <p class="section-sub">
+          The installer fetches signed binaries from the latest GitHub Release,
+          verifies SHA-256 checksums, and drops <code>mo</code>/<code>mole</code> in <code>/usr/local/bin</code>.
+        </p>
+      </header>
+
+      <div class="code-grid">
+        <article class="code-card">
+          <header class="code-card-head">
+            <span class="code-card-title">Install</span>
+            <span class="code-card-sub">macOS · arm64 &amp; amd64</span>
+          </header>
+          <pre><code>curl -fsSL https://raw.githubusercontent.com/ricciviero/Mole/main/install.sh | bash</code></pre>
+        </article>
+
+        <article class="code-card">
+          <header class="code-card-head">
+            <span class="code-card-title">First run</span>
+            <span class="code-card-sub">always preview first</span>
+          </header>
+          <pre><code>mo clean --dry-run    <span class="comment"># preview only</span>
+mo analyze            <span class="comment"># visual disk explorer</span>
+mo status             <span class="comment"># live system dashboard</span></code></pre>
+        </article>
+
+        <article class="code-card">
+          <header class="code-card-head">
+            <span class="code-card-title">Update</span>
+            <span class="code-card-sub">re-run the installer</span>
+          </header>
+          <pre><code>curl -fsSL https://raw.githubusercontent.com/ricciviero/Mole/main/install.sh | bash</code></pre>
+        </article>
+
+        <article class="code-card">
+          <header class="code-card-head">
+            <span class="code-card-title">Uninstall</span>
+            <span class="code-card-sub">clean removal</span>
+          </header>
+          <pre><code>mo remove</code></pre>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDITS -->
+  <section class="section section-alt section-credits">
+    <div class="container container-narrow">
+      <p class="eyebrow">Credits</p>
+      <h2>A fork that stands on giants.</h2>
+      <p>
+        Mole is a fork of the original
+        <a href="https://github.com/tw93/mole" target="_blank" rel="noopener">tw93/mole</a>
+        by <a href="https://github.com/tw93" target="_blank" rel="noopener">Tw93</a>.
+        All credit for the core architecture, design, and the vast majority of the codebase
+        goes to the upstream author and contributors.
+      </p>
+      <p>
+        This fork extends <code>clean</code> with Docker pruning (volume-safe) and
+        AI coding agents cleanup, and surfaces those paths in <code>analyze</code> overview insights.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer-inner">
+    <p>
+      <span class="logo-mark" aria-hidden="true">▮</span>
+      <strong>mole</strong> · MIT License
+    </p>
+    <p class="dim">
+      Built by
+      <a href="https://github.com/ricciviero" target="_blank" rel="noopener">Riccardo Civiero</a>
+      · Fork of
+      <a href="https://github.com/tw93/mole" target="_blank" rel="noopener">tw93/mole</a>
+    </p>
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
