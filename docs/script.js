@@ -53,21 +53,4 @@
     });
   }
 
-  /* ----------------------------------------------------------
-     Pull live GitHub stars + latest tag, replace the version chip.
-     Best-effort: silently skip on rate-limit / offline.
-     ---------------------------------------------------------- */
-  const versionChip = document.querySelector('.chip-accent');
-  if (versionChip && 'fetch' in window) {
-    fetch('https://api.github.com/repos/ricciviero/Mole/releases/latest', {
-      headers: { Accept: 'application/vnd.github+json' }
-    })
-      .then(r => (r.ok ? r.json() : null))
-      .then(data => {
-        if (!data || !data.tag_name) return;
-        const tag = String(data.tag_name).replace(/^[Vv]/, 'v');
-        versionChip.textContent = tag;
-      })
-      .catch(() => { /* keep static label */ });
-  }
 })();

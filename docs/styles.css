@@ -184,31 +184,6 @@ button { font: inherit; cursor: pointer; }
 }
 .hero > * { position: relative; z-index: 1; }
 
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-2);
-  margin-bottom: var(--s-5);
-}
-.chip {
-  display: inline-flex;
-  align-items: center;
-  height: 26px;
-  padding: 0 10px;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--text-dim);
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  letter-spacing: 0.02em;
-}
-.chip-accent {
-  color: var(--accent);
-  border-color: var(--accent-line);
-  background: var(--accent-soft);
-}
-
 .hero-title {
   font-family: var(--font-mono);
   font-size: clamp(2.1rem, 5.2vw, 3.6rem);
