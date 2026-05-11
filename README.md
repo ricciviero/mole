@@ -23,6 +23,8 @@
 - **Smart uninstaller**: Removes apps plus launch agents, preferences, and **hidden remnants**
 - **Disk insights**: Visualizes usage, finds large files, **rebuilds caches**, and refreshes system services
 - **Live monitoring**: Shows real-time CPU, GPU, memory, disk, and network stats
+- **Docker hygiene**: Prunes stopped containers, unused images, and build cache — **never touches volumes**, so database data is safe
+- **AI agents cleanup**: Rotates session transcripts and sandbox VMs for **Claude Code/Desktop, Codex CLI, and Cursor**, often reclaiming 10+ GB while preserving auth, memories, and installed skills
 
 ## Quick Start
 
@@ -358,6 +360,10 @@ Real feedback from users who shared Mole on X.
 - I have two cats, TangYuan and Coke. If you think Mole delights your life, you can feed them <a href="https://cats.tw93.fun?name=Mole" target="_blank">canned food 🥩</a>.
 
 <a href="https://cats.tw93.fun?name=Mole"><img src="https://cdn.jsdelivr.net/gh/tw93/sponsors@main/assets/sponsors.svg" width="1000" loading="lazy" /></a>
+
+## Credits
+
+This is a fork of the original [tw93/mole](https://github.com/tw93/mole) by [Tw93](https://github.com/tw93). All credit for the core architecture, design, and the vast majority of the codebase goes to the upstream author and contributors. This fork extends the `clean` command with Docker pruning (volume-safe) and AI coding agents cleanup (Claude Code/Desktop, Codex CLI, Cursor), and surfaces those paths in `analyze` overview insights.
 
 ## License
 
