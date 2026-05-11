@@ -152,6 +152,11 @@ var foldDirs = map[string]bool{
 	".docker":     true,
 	".containerd": true,
 
+	// AI coding agents (collapse so session transcripts don't flood the tree).
+	".claude": true,
+	".codex":  true,
+	".cursor": true,
+
 	// Mobile development.
 	"Pods":        true,
 	"DerivedData": true,

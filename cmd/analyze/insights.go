@@ -66,6 +66,14 @@ func createInsightEntries() []dirEntry {
 		{"pip Cache", filepath.Join(home, "Library", "Caches", "pip")},
 		{"Gradle Cache", filepath.Join(home, ".gradle", "caches")},
 		{"CocoaPods Cache", filepath.Join(home, "Library", "Caches", "CocoaPods")},
+
+		// AI coding agents (rotate large session logs + sandbox VMs).
+		// Claude Desktop covers vm_bundles (often >5 GB) plus Electron caches.
+		{"Claude Desktop", filepath.Join(home, "Library", "Application Support", "Claude")},
+		{"Claude Code (CLI)", filepath.Join(home, ".claude")},
+		{"Codex CLI", filepath.Join(home, ".codex")},
+		{"Cursor Data", filepath.Join(home, "Library", "Application Support", "Cursor")},
+		{"Chroma (claude-mem)", filepath.Join(home, ".cache", "chroma")},
 	}
 	for _, c := range cleanablePaths {
 		if info, err := os.Stat(c.path); err == nil && info.IsDir() {

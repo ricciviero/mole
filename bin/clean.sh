@@ -16,6 +16,10 @@ source "$SCRIPT_DIR/../lib/clean/brew.sh"
 source "$SCRIPT_DIR/../lib/clean/caches.sh"
 source "$SCRIPT_DIR/../lib/clean/apps.sh"
 source "$SCRIPT_DIR/../lib/clean/dev.sh"
+source "$SCRIPT_DIR/../lib/clean/docker.sh"
+source "$SCRIPT_DIR/../lib/clean/claude.sh"
+source "$SCRIPT_DIR/../lib/clean/codex.sh"
+source "$SCRIPT_DIR/../lib/clean/cursor.sh"
 source "$SCRIPT_DIR/../lib/clean/app_caches.sh"
 source "$SCRIPT_DIR/../lib/clean/hints.sh"
 source "$SCRIPT_DIR/../lib/clean/system.sh"
@@ -1117,6 +1121,20 @@ perform_cleanup() {
         # ===== 6. Developer tools (merged CLI and GUI tooling) =====
         start_section "Developer tools"
         clean_developer_tools
+        end_section
+
+        # ===== 6b. Docker (containers, images, build cache — never volumes) =====
+        start_section "Docker"
+        clean_docker_resources
+        end_section
+
+        # ===== 6c. AI agents (Claude Code/Desktop, Codex CLI, Cursor) =====
+        # Sandbox VMs, chroma DB, session transcripts, Electron caches.
+        # Preserves auth, user memories, installed skills/extensions.
+        start_section "AI agents"
+        clean_claude_data
+        clean_codex_data
+        clean_cursor_data
         end_section
 
         # ===== 7. Applications =====

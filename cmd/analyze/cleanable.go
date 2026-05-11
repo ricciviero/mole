@@ -80,6 +80,12 @@ var moCleanHandledPathFragments = []string{
 	"/Library/Saved Application State/",
 	"/.Trash/",
 	"/Library/DiagnosticReports/",
+	// AI coding agents — handled by lib/clean/{claude,codex,cursor}.sh
+	"/.claude/",
+	"/.codex/",
+	"/.cache/chroma",
+	"/Application Support/Claude/",
+	"/Application Support/Cursor/",
 }
 
 // Project dependency and build directories.

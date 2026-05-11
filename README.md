@@ -4,10 +4,10 @@
 </div>
 
 <p align="center">
-  <a href="https://github.com/tw93/mole/stargazers"><img src="https://img.shields.io/github/stars/tw93/mole?style=flat-square" alt="Stars"></a>
-  <a href="https://github.com/tw93/mole/releases"><img src="https://img.shields.io/github/v/tag/tw93/mole?label=version&style=flat-square" alt="Version"></a>
+  <a href="https://github.com/ricciviero/Mole/stargazers"><img src="https://img.shields.io/github/stars/ricciviero/Mole?style=flat-square" alt="Stars"></a>
+  <a href="https://github.com/ricciviero/Mole/releases"><img src="https://img.shields.io/github/v/tag/ricciviero/Mole?label=version&style=flat-square" alt="Version"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License"></a>
-  <a href="https://github.com/tw93/mole/commits"><img src="https://img.shields.io/github/commit-activity/m/tw93/mole?style=flat-square" alt="Commits"></a>
+  <a href="https://github.com/ricciviero/Mole/commits"><img src="https://img.shields.io/github/commit-activity/m/ricciviero/Mole?style=flat-square" alt="Commits"></a>
   <a href="https://twitter.com/HiTw93"><img src="https://img.shields.io/badge/follow-Tw93-red?style=flat-square&logo=Twitter" alt="Twitter"></a>
   <a href="https://t.me/+GclQS9ZnxyI2ODQ1"><img src="https://img.shields.io/badge/chat-Telegram-blueviolet?style=flat-square&logo=Telegram" alt="Telegram"></a>
 </p>
@@ -36,10 +36,10 @@ brew install mole
 
 ```bash
 # Optional args: -s latest for main branch code, -s 1.17.0 for specific version
-curl -fsSL https://raw.githubusercontent.com/tw93/mole/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ricciviero/Mole/main/install.sh | bash
 ```
 
-> Note: Mole is built for macOS. An experimental Windows version is available in the [windows branch](https://github.com/tw93/Mole/tree/windows) for early adopters.
+> Note: Mole is built for macOS. An experimental Windows version is available in the [windows branch](https://github.com/ricciviero/Mole/tree/windows) for early adopters.
 
 **Run**
 
@@ -316,7 +316,7 @@ Select Installers to Remove - 3.8GB (5 selected)
 Launch Mole commands from Raycast or Alfred:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/tw93/Mole/main/scripts/setup-quick-launchers.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ricciviero/Mole/main/scripts/setup-quick-launchers.sh | bash
 ```
 
 Adds 5 commands: `Mole Clean`, `Mole Uninstall`, `Mole Optimize`, `Mole Analyze`, `Mole Status`.
@@ -342,7 +342,7 @@ Mole auto-detects your terminal app. iTerm2 has known compatibility issues. We h
 
 Thanks to everyone who helped build Mole. Go follow them. ❤️
 
-<a href="https://github.com/tw93/Mole/graphs/contributors">
+<a href="https://github.com/ricciviero/Mole/graphs/contributors">
   <img src="./CONTRIBUTORS.svg?v=2" width="1000" />
 </a>
 
@@ -353,7 +353,7 @@ Real feedback from users who shared Mole on X.
 
 ## Support
 
-- If Mole helped you, [share it](https://twitter.com/intent/tweet?url=https://github.com/tw93/Mole&text=Mole%20-%20Deep%20clean%20and%20optimize%20your%20Mac.) with friends or give it a star.
+- If Mole helped you, [share it](https://twitter.com/intent/tweet?url=https://github.com/ricciviero/Mole&text=Mole%20-%20Deep%20clean%20and%20optimize%20your%20Mac.) with friends or give it a star.
 - Got ideas or bugs? Open an issue or PR, feel free to contribute your best AI model.
 - I have two cats, TangYuan and Coke. If you think Mole delights your life, you can feed them <a href="https://cats.tw93.fun?name=Mole" target="_blank">canned food 🥩</a>.
 
