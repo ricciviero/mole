@@ -22,20 +22,20 @@
 
 ## Quick Start
 
-**Install via Homebrew**
+**Install via script (macOS only)**
 
 ```bash
-brew install mole
-```
-
-**Or via script**
-
-```bash
-# Optional args: -s latest for main branch code, -s 1.17.0 for specific version
+# Optional args: -s latest for main branch code, -s 1.39.1 for a specific version
 curl -fsSL https://raw.githubusercontent.com/ricciviero/Mole/main/install.sh | bash
 ```
 
-> Note: Mole is built for macOS. An experimental Windows version is available in the [windows branch](https://github.com/ricciviero/Mole/tree/windows) for early adopters.
+The installer fetches signed binaries from the latest GitHub Release, verifies SHA256 checksums, and installs `mo`/`mole` into `/usr/local/bin`.
+
+**Uninstall**
+
+```bash
+mo remove
+```
 
 **Run**
 
