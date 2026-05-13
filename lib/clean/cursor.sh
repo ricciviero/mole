@@ -5,8 +5,14 @@
 # skills-cursor/, IndexedDB/ (workspace state).
 set -euo pipefail
 
+# Detect Cursor via its bundle path so we also catch helpers (Renderer, GPU,
+# Plugin, Utility) that keep Local Storage / IndexedDB locked. `pgrep -x "Cursor"`
+# missed the main process on macOS when it was registered under a different
+# argv[0] (e.g. "Cursor Helper"), letting cleanup touch live Electron paths.
+# The "Cursor.app/" anchor avoids false positives with system services like
+# CursorUIViewService.xpc (TextInputUIMacHelper).
 is_cursor_running() {
-    pgrep -x "Cursor" > /dev/null 2>&1
+    pgrep -fi "Cursor\.app/" > /dev/null 2>&1
 }
 
 clean_cursor_data() {
@@ -32,10 +38,10 @@ clean_cursor_data() {
         safe_clean "$desktop_root/Shared Dictionary/"* "Cursor shared dictionary"
         safe_clean "$desktop_root/logs/"* "Cursor app logs"
 
-        # User/logs and User/History grow without bound; the rest of User/ is config.
+        # User/logs grows without bound; the rest of User/ is config.
         safe_clean "$desktop_root/User/logs/"* "Cursor user logs"
-        safe_clean "$desktop_root/User/History/"* "Cursor file history"
-        safe_clean "$desktop_root/User/workspaceStorage/"* "Cursor workspace storage cache"
+        # safe_clean "$desktop_root/User/History/"* "Cursor file history" # PROTECTED: local file timeline backups
+        # safe_clean "$desktop_root/User/workspaceStorage/"* "Cursor workspace storage cache" # PROTECTED: Cursor AI chat history and workspace state
     fi
 
     # CLI-side: AI tracking telemetry only. extensions/, projects/, skills-cursor/

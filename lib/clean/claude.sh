@@ -6,8 +6,13 @@ set -euo pipefail
 
 # Returns 0 when Claude Desktop appears to be running. Used to skip cleanup of
 # paths Electron may hold open (vm_bundles, Local Storage, IndexedDB).
+# `pgrep -x "Claude"` missed the main process on macOS when Electron registered
+# it under a Helper-style argv[0]; match the bundle path instead so we catch
+# every helper (Renderer, GPU, Plugin, Utility, crashpad). The "Claude.app/"
+# anchor avoids false positives with unrelated processes that happen to mention
+# the word "claude".
 is_claude_desktop_running() {
-    pgrep -x "Claude" > /dev/null 2>&1
+    pgrep -fi "Claude\.app/" > /dev/null 2>&1
 }
 
 # Claude CLI (~/.claude) — non-essential caches, logs, transcripts, history.

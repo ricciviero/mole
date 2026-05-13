@@ -260,7 +260,9 @@ is_claude_vm_bundle_orphaned() {
     [[ -d "$vm_bundle_path" ]] || return 1
 
     # Extra guard in case the running-app scan missed Claude Desktop.
-    if pgrep -x "Claude" > /dev/null 2>&1; then
+    # Match the bundle path to catch Electron helpers (see is_claude_desktop_running
+    # in lib/clean/claude.sh for the same rationale).
+    if pgrep -fi "Claude\.app/" > /dev/null 2>&1; then
         return 1
     fi
 
