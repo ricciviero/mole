@@ -4,12 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mole — Reclaim disk from Docker and AI coding agents on macOS</title>
-<meta name="description" content="Open-source macOS CLI built for developers. Prunes Docker images and build cache without touching volumes, rotates Claude Code, Codex and Cursor session data, and cleans the rest of your Mac as a bonus. Reclaim 10+ GB in one command." />
+<meta name="description" content="Open-source macOS CLI built for developers. Prunes Docker images and build cache without touching volumes, clears Claude Desktop sandbox VMs plus Claude Code transcripts, rotates Codex CLI session logs and caches, and prunes Cursor Electron caches/logs while keeping IDE chat state. Cleans the rest of your Mac as a bonus. Reclaim 10+ GB in one command." />
 <meta name="theme-color" content="#0a0a0a" />
 
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Mole — Reclaim disk from Docker and AI coding agents on macOS" />
-<meta property="og:description" content="Volume-safe Docker prune + Claude / Codex / Cursor cleanup, plus a full macOS deep-clean as a bonus." />
+<meta property="og:description" content="Volume-safe Docker prune; Claude VM + transcripts; Codex archived/active sessions; Cursor caches &amp; logs without wiping chat workspace state — plus a full macOS deep-clean." />
 <meta property="og:url" content="https://github.com/ricciviero/Mole" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -52,9 +52,14 @@
       </h1>
 
       <p class="hero-sub">
-        A macOS CLI built for developers. Prunes Docker without touching volumes, rotates
-        <strong>Claude Code/Desktop, Codex and Cursor</strong> session data and sandbox VMs, and
-        deep-cleans the rest of your Mac as a bonus. <strong>10+ GB</strong> back in one command.
+        A macOS CLI built for developers. Prunes Docker without touching volumes, clears
+        <strong>Claude Desktop</strong> sandbox VMs (<code>vm_bundles</code>) plus
+        <strong>Claude Code</strong> transcripts in <code>~/.claude/projects</code>,
+        rotates <strong>Codex CLI</strong> archived/active sessions, logs and cache in <code>~/.codex</code>,
+        and clears <strong>Cursor</strong> rebuildable Electron caches, app logs and local telemetry
+        while <strong>preserving</strong> chat workspace state
+        (<code>User/workspaceStorage</code>, <code>User/History</code>). Deep-cleans the rest of your Mac as a bonus.
+        <strong>10+ GB</strong> back in one command.
       </p>
 
       <div class="install-box" role="region" aria-label="Install command">
@@ -84,9 +89,10 @@
         <p class="eyebrow">What it does</p>
         <h2>Built for devs who live with <span class="accent">Docker</span> and AI coding agents.</h2>
         <p class="section-sub">
-          Two cleaners no other macOS tool does well — volume-safe Docker prune and full rotation of
-          Claude/Codex/Cursor session data — wrapped in a deep-clean toolkit that replaces CleanMyMac,
-          AppCleaner, DaisyDisk and iStat Menus as a side effect.
+          Two cleaners no other macOS tool does well — volume-safe Docker prune plus targeted AI tooling
+          hygiene: <strong>Claude</strong> VM + transcripts, <strong>Codex</strong> session transcripts and cache,
+          <strong>Cursor</strong> Electron caches/logs (workspace chat state kept) — wrapped in a deep-clean
+          toolkit that replaces CleanMyMac, AppCleaner, DaisyDisk and iStat Menus as a side effect.
         </p>
       </header>
 
@@ -103,8 +109,14 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="10"/></svg>
           </div>
           <h3>AI agents that don&rsquo;t hoard</h3>
-          <p>Rotates session transcripts, sandbox VMs, plugin caches and the chroma vector DB for
-          <strong>Claude Code/Desktop, Codex CLI and Cursor</strong>. Preserves auth, memories, installed skills and extensions.</p>
+          <p><strong>Claude Desktop</strong>: clears the sandbox VM (<code>vm_bundles</code>) plus Electron caches when it is safe;
+          <strong>Claude Code</strong>: removes JSONL transcripts under <code>~/.claude/projects</code>,
+          generic caches/logs, plugin caches and (where used) claude-mem&rsquo;s Chroma DB.
+          <strong>Codex CLI</strong>: rotates <code>~/.codex/archived_sessions</code>, active <code>sessions/</code>,
+          logs, shell snapshots, tmp and vendor import caches — keeps <code>config.toml</code>, memories,
+          rules, skills, plugins and <code>sqlite/</code> auth intact.
+          <strong>Cursor</strong>: trims HTTP/GPU/code caches and logs (including <code>~/.cursor/ai-tracking</code>);
+          skips <code>User/workspaceStorage</code> and <code>User/History</code> so your IDE chats and local file timeline stay put.</p>
         </li>
       </ul>
 
@@ -157,8 +169,9 @@
         <p class="eyebrow">Where the gigabytes hide</p>
         <h2>The paths your tools never tell you about.</h2>
         <p class="section-sub">
-          Sandbox disk images, vector DBs, archived sessions, Electron caches. The cleaner skips anything
-          irreplaceable — auth tokens, your memories, installed skills, Docker volumes.
+          Sandbox disk images, vector DBs, Claude &amp; Codex session payloads, Electron caches under
+          Cursor&rsquo;s Application Support folder. Anything irreplaceable is skipped —
+          Cursor workspace chat folders, Claude/Codex auth + memories where applicable, Docker volumes.
         </p>
       </header>
 
@@ -184,8 +197,13 @@
             </tr>
             <tr>
               <td><code>~/.codex/archived_sessions</code></td>
-              <td>Codex CLI archived sessions</td>
+              <td>Codex CLI archived session transcripts</td>
               <td class="size size-lg">600 MB+</td>
+            </tr>
+            <tr>
+              <td><code>~/.codex/sessions</code></td>
+              <td>Codex CLI active session transcripts</td>
+              <td class="size size-md">varies</td>
             </tr>
             <tr>
               <td><code>~/.cache/chroma</code></td>
@@ -193,9 +211,14 @@
               <td class="size size-md">~150 MB</td>
             </tr>
             <tr>
-              <td><code>~/Library/Application Support/Cursor/Cache</code></td>
-              <td>Cursor Electron HTTP/GPU cache</td>
+              <td><code>~/Library/Application Support/Cursor/</code><br /><span class="dim">(<code>Cache</code>, <code>CachedData</code>, <code>Code Cache</code>, <code>GPUCache</code>, <code>Dawn*</code>, <code>logs</code>, <code>User/logs</code>)</span></td>
+              <td>Cursor rebuildable Electron caches &amp; log streams (chat workspace dirs excluded)</td>
               <td class="size size-sm">tens of MB</td>
+            </tr>
+            <tr>
+              <td><code>~/.cursor/ai-tracking</code></td>
+              <td>Cursor CLI-side AI telemetry scratch files</td>
+              <td class="size size-sm">&lt; few MB</td>
             </tr>
             <tr>
               <td><code>docker system / image / builder prune</code></td>
@@ -207,9 +230,11 @@
       </div>
 
       <p class="note">
-        <strong>Never touched:</strong> Docker volumes · <code>~/.claude/memory</code> ·
-        <code>~/.claude/plugins/data</code> · <code>~/.claude/skills</code> ·
-        Cursor <code>extensions/</code> &amp; <code>User/</code> settings · Codex auth.
+        <strong>Preserved:</strong> Docker volumes ·
+        Claude <code>~/.claude/memory</code>, <code>~/.claude/plugins/data</code>, <code>~/.claude/skills</code> ·
+        Cursor <code>extensions/</code>, <code>User/workspaceStorage</code>, <code>User/History</code>, editor settings/snippet files
+        (<code>User/settings.json</code>, keybindings, etc.) ·
+        Codex <code>config.toml</code>, <code>memories/</code>, <code>rules/</code>, <code>skills/</code>, plugin trees and <code>sqlite/</code> auth.
       </p>
     </div>
   </section>
