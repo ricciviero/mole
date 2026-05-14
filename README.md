@@ -25,7 +25,7 @@
 **Install via script (macOS only)**
 
 ```bash
-# Optional args: -s latest for main branch code, -s 1.39.1 for a specific version
+# Optional args: -s latest for main branch code, -s 1.39.2 for a specific version
 curl -fsSL https://raw.githubusercontent.com/ricciviero/Mole/main/install.sh | bash
 ```
 
