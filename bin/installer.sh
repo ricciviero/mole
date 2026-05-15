@@ -422,7 +422,7 @@ select_installers() {
         done
 
         printf "%s\n" "$clear_line"
-        printf "%s${GRAY}${ICON_NAV_UP}${ICON_NAV_DOWN}  |  Space Select  |  Enter Confirm  |  A All  |  I Invert  |  Q Quit${NC}\n" "$clear_line"
+        printf "%s${GRAY}${ICON_NAV_UP}${ICON_NAV_DOWN}  |  Space Select  |  Enter Confirm  |  A All  |  I Invert  |  Q Menu · Esc Quit${NC}\n" "$clear_line"
     }
 
     trap restore_terminal EXIT
@@ -493,7 +493,11 @@ select_installers() {
                     fi
                 done
                 ;;
-            "q" | "Q" | $'\x03') # Quit or Ctrl-C
+            "q" | "Q") # Back to Mole main menu
+                restore_terminal
+                return 2
+                ;;
+            $'\x03') # Ctrl-C — quit the CLI
                 restore_terminal
                 return 1
                 ;;
@@ -521,8 +525,12 @@ show_installer_menu() {
     echo ""
 
     MOLE_SELECTION_RESULT=""
-    if ! select_installers "${DISPLAY_NAMES[@]}"; then
-        return 1
+    set +e
+    select_installers "${DISPLAY_NAMES[@]}"
+    local _installer_rc=$?
+    set -e
+    if [[ $_installer_rc -ne 0 ]]; then
+        return $_installer_rc
     fi
 
     return 0
@@ -562,12 +570,15 @@ delete_selected_installers() {
 
     # Confirm deletion
     echo ""
-    echo -ne "${PURPLE}${ICON_ARROW}${NC} Delete ${#selected_indices[@]} installers, ${confirm_human}  ${GREEN}Enter${NC} confirm, ${GRAY}ESC${NC} cancel: "
+    echo -ne "${PURPLE}${ICON_ARROW}${NC} Delete ${#selected_indices[@]} installers, ${confirm_human}  ${GREEN}Enter${NC} confirm, ${GRAY}Q${NC} menu, ${GRAY}ESC${NC} quit: "
 
     IFS= read -r -s -n1 confirm || confirm=""
     case "$confirm" in
-        $'\e' | q | Q)
-            return 1
+        q | Q)
+            return_to_main_menu
+            ;;
+        $'\e')
+            exit 0
             ;;
         "" | $'\n' | $'\r')
             printf "\r\033[K" # Clear prompt line
@@ -635,10 +646,17 @@ perform_installers() {
     fi
 
     # Show menu
-    if ! show_installer_menu; then
+    set +e
+    show_installer_menu
+    local _menu_rc=$?
+    set -e
+    if [[ $_menu_rc -ne 0 ]]; then
         if [[ -t 1 ]]; then
             leave_alt_screen
             IN_ALT_SCREEN=0
+        fi
+        if [[ $_menu_rc -eq 2 ]]; then
+            return_to_main_menu
         fi
         return 1 # User cancelled
     fi

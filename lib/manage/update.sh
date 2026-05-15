@@ -102,7 +102,7 @@ ask_for_updates() {
     fi
 
     if [[ "${MOLE_UPDATE_AVAILABLE:-}" == "true" ]]; then
-        echo -ne "${YELLOW}Update Mole now?${NC} ${GRAY}Enter confirm / ESC cancel${NC}: "
+        echo -ne "${YELLOW}Update Mole now?${NC} ${GRAY}Enter confirm / Q menu / Esc quit${NC}: "
 
         local key
         if ! key=$(read_key); then
@@ -110,10 +110,20 @@ ask_for_updates() {
             return 1
         fi
 
-        if [[ "$key" == "ENTER" ]]; then
-            echo "yes"
-            return 0
-        fi
+        case "$key" in
+            "ENTER")
+                echo "yes"
+                return 0
+                ;;
+            "BACK")
+                echo "skip"
+                return_to_main_menu
+                ;;
+            "QUIT")
+                echo "skip"
+                exit 0
+                ;;
+        esac
     fi
 
     if [[ -n "${BREW_OUTDATED_COUNT:-}" && "${BREW_OUTDATED_COUNT:-0}" -gt 0 ]]; then

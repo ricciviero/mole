@@ -220,7 +220,7 @@ read_key() {
     case "$key" in
         $'\n' | $'\r') echo "ENTER" ;;
         ' ') echo "SPACE" ;;
-        'q' | 'Q') echo "QUIT" ;;
+        'q' | 'Q') echo "BACK" ;;
         'R') echo "RETRY" ;;
         'm' | 'M') echo "MORE" ;;
         'v' | 'V') echo "VERSION" ;;
@@ -282,6 +282,18 @@ drain_pending_input() {
         [[ $drained -gt 100 ]] && break
     done
     return 0
+}
+
+# Return to Mole main menu when reachable, otherwise exit cleanly.
+# MOLE_BIN is exported by the top-level `mole` dispatcher before exec'ing
+# sub-commands; when the sub-command is invoked directly (e.g. `mo clean`),
+# there is no parent menu to return to, so we exit.
+return_to_main_menu() {
+    show_cursor 2> /dev/null || true
+    if [[ -n "${MOLE_BIN:-}" && -x "${MOLE_BIN}" ]]; then
+        exec "${MOLE_BIN}"
+    fi
+    exit 0
 }
 
 # Format menu option display

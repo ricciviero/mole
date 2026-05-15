@@ -50,16 +50,17 @@ type metricsMsg struct {
 }
 
 type model struct {
-	collector   *Collector
-	width       int
-	height      int
-	metrics     MetricsSnapshot
-	errMessage  string
-	ready       bool
-	lastUpdated time.Time
-	collecting  bool
-	animFrame   int
-	catHidden   bool // true = hidden, false = visible
+	collector    *Collector
+	width        int
+	height       int
+	metrics      MetricsSnapshot
+	errMessage   string
+	ready        bool
+	lastUpdated  time.Time
+	collecting   bool
+	animFrame    int
+	catHidden    bool // true = hidden, false = visible
+	returnToMenu bool // true when user pressed Q to return to Mole main menu
 }
 
 // padViewToHeight ensures the rendered frame always overwrites the full
@@ -150,7 +151,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "q", "esc", "ctrl+c":
+		case "q":
+			m.returnToMenu = true
+			return m, tea.Quit
+		case "esc", "ctrl+c":
 			return m, tea.Quit
 		case "k":
 			// Toggle cat visibility and persist preference
@@ -277,11 +281,16 @@ func runJSONMode() {
 }
 
 // runTUIMode runs the interactive terminal UI.
+// Exit code 64 signals "return to Mole main menu" (Q pressed); 0 = ESC/quit.
 func runTUIMode() {
 	p := tea.NewProgram(newModel(), tea.WithAltScreen())
-	if _, err := p.Run(); err != nil {
+	final, err := p.Run()
+	if err != nil {
 		fmt.Fprintf(os.Stderr, "system status error: %v\n", err)
 		os.Exit(1)
+	}
+	if fm, ok := final.(model); ok && fm.returnToMenu {
+		os.Exit(64)
 	}
 }
 

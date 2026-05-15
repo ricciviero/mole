@@ -7,13 +7,15 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+export MOLE_BIN="$SCRIPT_DIR/mole"
+
 source "$SCRIPT_DIR/lib/core/common.sh"
 source "$SCRIPT_DIR/lib/core/commands.sh"
 
 trap cleanup_temp_files EXIT INT TERM
 
 # Version and update helpers
-VERSION="1.39.2"
+VERSION="1.39.3"
 MOLE_TAGLINE="Deep clean and optimize your Mac."
 
 is_touchid_configured() {
@@ -854,7 +856,7 @@ show_main_menu() {
         elif [[ "${MAIN_MENU_SHOW_UPDATE:-false}" == "true" ]]; then
             controls="${controls}  |  U Update"
         fi
-        controls="${controls}  |  Q Quit${NC}"
+        controls="${controls}  |  Esc Quit${NC}"
         printf '\r\033[2K%s\n' "$controls"
         printf '\r\033[2K\n'
     fi
@@ -953,6 +955,7 @@ interactive_main_menu() {
                 update_mole
                 exit 0
                 ;;
+            "BACK") : ;; # Already at the main menu — Q is a no-op here.
             "QUIT") cleanup_and_exit ;;
         esac
 

@@ -286,14 +286,17 @@ show_menu() {
     echo ""
     show_status
     if is_touchid_configured; then
-        echo -ne "${PURPLE}☛${NC} Press ${GREEN}Enter${NC} to disable, ${GRAY}Q${NC} to quit: "
+        echo -ne "${PURPLE}☛${NC} Press ${GREEN}Enter${NC} to disable, ${GRAY}Q${NC} menu, ${GRAY}Esc${NC} quit: "
         IFS= read -r -s -n1 key || key=""
         drain_pending_input # Clean up any escape sequence remnants
         echo ""
 
         case "$key" in
-            $'\e' | q | Q) # ESC or Q
-                return 0
+            q | Q)
+                return_to_main_menu
+                ;;
+            $'\e')
+                exit 0
                 ;;
             "" | $'\n' | $'\r')   # Enter
                 printf "\r\033[K" # Clear the prompt line
@@ -305,13 +308,16 @@ show_menu() {
                 ;;
         esac
     else
-        echo -ne "${PURPLE}☛${NC} Press ${GREEN}Enter${NC} to enable, ${GRAY}Q${NC} to quit: "
+        echo -ne "${PURPLE}☛${NC} Press ${GREEN}Enter${NC} to enable, ${GRAY}Q${NC} menu, ${GRAY}Esc${NC} quit: "
         IFS= read -r -s -n1 key || key=""
         drain_pending_input # Clean up any escape sequence remnants
 
         case "$key" in
-            $'\e' | q | Q) # ESC or Q
-                return 0
+            q | Q)
+                return_to_main_menu
+                ;;
+            $'\e')
+                exit 0
                 ;;
             "" | $'\n' | $'\r')   # Enter
                 printf "\r\033[K" # Clear the prompt line

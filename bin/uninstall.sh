@@ -1486,6 +1486,9 @@ main() {
             rm -f "$apps_file"
             [[ "$apps_file" == "$cached_apps_file" ]] && cached_apps_file=""
 
+            if [[ $exit_code -eq 2 ]]; then
+                return_to_main_menu
+            fi
             return 0
         fi
 
@@ -1586,7 +1589,7 @@ main() {
         local _key=""
         local _pressed=false
         while [[ $_countdown -gt 0 ]]; do
-            printf "\r${GRAY}Press Enter to return to the app list, press q to exit (%d)${NC} " "$_countdown"
+            printf "\r${GRAY}Enter return to list · Q menu · Esc quit (%d)${NC} " "$_countdown"
             if IFS= read -r -s -n1 -t 1 _key; then
                 _pressed=true
                 break
@@ -1598,6 +1601,12 @@ main() {
 
         if [[ "$_pressed" == "true" && -z "$_key" ]]; then
             :
+        elif [[ "$_key" == "q" || "$_key" == "Q" ]]; then
+            show_cursor
+            return_to_main_menu
+        elif [[ "$_key" == $'\e' ]]; then
+            show_cursor
+            exit 0
         else
             show_cursor
             return 0

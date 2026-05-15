@@ -212,7 +212,7 @@ paginated_multi_select() {
 
         # Clear any remaining lines at bottom
         printf "${clear_line}\n" >&2
-        printf "${clear_line}${GRAY}${ICON_NAV_UP}${ICON_NAV_DOWN} | Space | Enter Save | Q Cancel${NC}\n" >&2
+        printf "${clear_line}${GRAY}${ICON_NAV_UP}${ICON_NAV_DOWN} | Space | Enter Save | Q Menu · Esc Quit${NC}\n" >&2
 
         # Clear one more line to ensure no artifacts
         printf "${clear_line}" >&2
@@ -227,6 +227,10 @@ paginated_multi_select() {
             "QUIT")
                 cleanup
                 return 1
+                ;;
+            "BACK")
+                cleanup
+                return 2
                 ;;
             "UP")
                 if [[ $total_items -eq 0 ]]; then

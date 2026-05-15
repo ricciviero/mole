@@ -825,22 +825,22 @@ select_purge_categories() {
         local _enter="${GRAY}Enter Confirm${NC}"
         local _all="${GRAY}A All${NC}"
         local _invert="${GRAY}I Invert${NC}"
-        local _quit="${GRAY}Q Quit${NC}"
+        local _quit="${GRAY}Q Menu · Esc Quit${NC}"
 
         # Strip ANSI to measure real length
         _ph_len() { printf "%s" "$1" | LC_ALL=C awk '{gsub(/\033\[[0-9;]*[A-Za-z]/,""); printf "%d", length}'; }
 
-        # Level 0 (full): ↑↓ | Space Select | Enter Confirm | A All | I Invert | Q Quit
+        # Level 0 (full): ↑↓ | Space Select | Enter Confirm | A All | I Invert | Q Menu
         local _full="${_nav}${_sep}${_space}${_sep}${_enter}${_sep}${_all}${_sep}${_invert}${_sep}${_quit}"
         if (($(_ph_len "$_full") <= _term_w)); then
             printf "%s${_full}${NC}\n" "$clear_line"
         else
-            # Level 1: ↑↓ | Enter Confirm | A All | I Invert | Q Quit
+            # Level 1: ↑↓ | Enter Confirm | A All | I Invert | Q Menu
             local _l1="${_nav}${_sep}${_enter}${_sep}${_all}${_sep}${_invert}${_sep}${_quit}"
             if (($(_ph_len "$_l1") <= _term_w)); then
                 printf "%s${_l1}${NC}\n" "$clear_line"
             else
-                # Level 2 (minimal): ↑↓ | Enter | Q Quit
+                # Level 2 (minimal): ↑↓ | Enter | Q Menu
                 printf "%s${_nav}${_sep}${_enter}${_sep}${_quit}${NC}\n" "$clear_line"
             fi
         fi
@@ -930,7 +930,11 @@ select_purge_categories() {
                     fi
                 done
                 ;;
-            "q" | "Q" | $'\x03') # Quit or Ctrl-C
+            "q" | "Q") # Back to Mole main menu
+                restore_terminal
+                return 2
+                ;;
+            $'\x03') # Ctrl-C — quit the CLI
                 restore_terminal
                 return 1
                 ;;
@@ -983,7 +987,7 @@ confirm_purge_cleanup() {
         done
     fi
 
-    echo -ne "${PURPLE}${ICON_ARROW}${NC} Remove ${item_count} ${item_text}, ${size_display}${unknown_hint}  ${GREEN}Enter${NC} confirm, ${GRAY}ESC${NC} cancel: "
+    echo -ne "${PURPLE}${ICON_ARROW}${NC} Remove ${item_count} ${item_text}, ${size_display}${unknown_hint}  ${GREEN}Enter${NC} confirm, ${GRAY}Q${NC} menu, ${GRAY}ESC${NC} quit: "
     drain_pending_input
     local key=""
     IFS= read -r -s -n1 key || key=""
@@ -993,6 +997,14 @@ confirm_purge_cleanup() {
         "" | $'\n' | $'\r' | y | Y)
             echo ""
             return 0
+            ;;
+        q | Q)
+            echo ""
+            return_to_main_menu
+            ;;
+        $'\x1b')
+            echo ""
+            exit 0
             ;;
         *)
             echo ""
@@ -1540,9 +1552,16 @@ clean_project_artifacts() {
     PURGE_SELECTION_RESULT=""
     PURGE_CATEGORY_FULL_PATHS_ARRAY=("${item_display_paths[@]}")
     if [[ -t 0 ]]; then
-        if ! select_purge_categories "${menu_options[@]}"; then
+        set +e
+        select_purge_categories "${menu_options[@]}"
+        local _purge_rc=$?
+        set -e
+        if [[ $_purge_rc -ne 0 ]]; then
             PURGE_CATEGORY_FULL_PATHS_ARRAY=()
             unset PURGE_CATEGORY_SIZES PURGE_RECENT_CATEGORIES PURGE_AGE_LABELS PURGE_SELECTION_RESULT
+            if [[ $_purge_rc -eq 2 ]]; then
+                return_to_main_menu
+            fi
             return 1
         fi
     else

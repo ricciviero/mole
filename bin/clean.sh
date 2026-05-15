@@ -900,7 +900,12 @@ EOF
             local choice
             choice=$(read_key)
 
-            # ESC/Q aborts, Space skips, Enter enables system cleanup.
+            # ESC quits the CLI, Q returns to the main menu, Space skips,
+            # Enter enables system cleanup.
+            if [[ "$choice" == "BACK" ]]; then
+                echo -e " ${GRAY}Canceled${NC}"
+                return_to_main_menu
+            fi
             if [[ "$choice" == "QUIT" ]]; then
                 echo -e " ${GRAY}Canceled${NC}"
                 exit 0

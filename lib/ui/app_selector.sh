@@ -182,7 +182,9 @@ select_apps_for_uninstall() {
     # leave MOLE_MENU_SORT_DEFAULT untouched if user set it globally
 
     if [[ $exit_code -ne 0 ]]; then
-        return 1
+        # 1 = ESC/cancel, 2 = Q/back to main menu. Propagate so callers
+        # can decide between "exit CLI" and "return to main menu".
+        return $exit_code
     fi
 
     if [[ -z "$MOLE_SELECTION_RESULT" ]]; then

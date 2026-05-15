@@ -131,6 +131,7 @@ type model struct {
 	lastTotalFiles       int64           // Total files from previous scan (for progress bar)
 	diskFree             int64           // Free disk space for the analyzed volume
 	viewNeedsRefresh     bool
+	returnToMenu         bool // true when user pressed Q to return to Mole main menu
 }
 
 func (m model) inOverviewMode() bool {
@@ -179,9 +180,13 @@ func runTUIMode(path string, isOverview bool) {
 	}
 
 	p := tea.NewProgram(newModel(path, isOverview), tea.WithAltScreen())
-	if _, err := p.Run(); err != nil {
+	final, err := p.Run()
+	if err != nil {
 		fmt.Fprintf(os.Stderr, "analyzer error: %v\n", err)
 		os.Exit(1)
+	}
+	if fm, ok := final.(model); ok && fm.returnToMenu {
+		os.Exit(64)
 	}
 }
 
@@ -651,11 +656,14 @@ func (m model) updateKey(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 
 			m.status = fmt.Sprintf("Deleting %d items...", len(pathsToDelete))
 			return m, tea.Batch(deleteMultiplePathsCmd(pathsToDelete, m.deleteCount), tickCmd())
-		case "esc", "q":
+		case "esc":
 			m.status = "Cancelled"
 			m.deleteConfirm = false
 			m.deleteTarget = nil
 			return m, nil
+		case "q", "Q":
+			m.returnToMenu = true
+			return m, tea.Quit
 		case "ctrl+c":
 			return m, tea.Quit
 		default:
@@ -664,7 +672,10 @@ func (m model) updateKey(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	}
 
 	switch msg.String() {
-	case "q", "Q", "ctrl+c":
+	case "q", "Q":
+		m.returnToMenu = true
+		return m, tea.Quit
+	case "ctrl+c":
 		return m, tea.Quit
 	case "esc":
 		if m.showLargeFiles {

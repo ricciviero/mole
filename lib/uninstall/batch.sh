@@ -522,17 +522,23 @@ batch_uninstall_applications() {
     if [[ ${#running_apps[@]} -gt 0 ]]; then
         removal_note+=" ${YELLOW}[Running]${NC}"
     fi
-    echo -ne "${PURPLE}${ICON_ARROW}${NC} ${removal_note}  ${GREEN}Enter${NC} confirm, ${GRAY}ESC${NC} cancel: "
+    echo -ne "${PURPLE}${ICON_ARROW}${NC} ${removal_note}  ${GREEN}Enter${NC} confirm, ${GRAY}Q${NC} menu, ${GRAY}ESC${NC} quit: "
 
     drain_pending_input # Clean up any pending input before confirmation
     IFS= read -r -s -n1 key || key=""
     drain_pending_input # Clean up any escape sequence remnants
     case "$key" in
-        $'\e' | q | Q)
+        q | Q)
             echo ""
             echo ""
             _restore_uninstall_traps
-            return 0
+            return_to_main_menu
+            ;;
+        $'\e')
+            echo ""
+            echo ""
+            _restore_uninstall_traps
+            exit 0
             ;;
         "" | $'\n' | $'\r' | y | Y)
             echo "" # Move to next line

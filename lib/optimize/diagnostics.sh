@@ -325,19 +325,30 @@ opt_diag_offer_detach_candidates() {
         return 0
     fi
 
-    echo -ne "  ${GRAY}${ICON_REVIEW}${NC} ${YELLOW}Detach now?${NC} ${GRAY}Enter confirm / Space cancel${NC}: "
+    echo -ne "  ${GRAY}${ICON_REVIEW}${NC} ${YELLOW}Detach now?${NC} ${GRAY}Enter confirm / Space cancel / Q menu / Esc quit${NC}: "
     local key=""
     if ! key=$(read_key); then
         echo -e "\n  ${GRAY}${ICON_WARNING}${NC} Mounted image detach skipped"
         return 0
     fi
 
-    if [[ "$key" == "ENTER" ]]; then
-        echo ""
-        opt_diag_detach_candidates "$candidates"
-    else
-        echo -e "\n  ${GRAY}${ICON_WARNING}${NC} Mounted image detach skipped"
-    fi
+    case "$key" in
+        "BACK")
+            echo ""
+            return_to_main_menu
+            ;;
+        "QUIT")
+            echo ""
+            exit 0
+            ;;
+        "ENTER")
+            echo ""
+            opt_diag_detach_candidates "$candidates"
+            ;;
+        *)
+            echo -e "\n  ${GRAY}${ICON_WARNING}${NC} Mounted image detach skipped"
+            ;;
+    esac
 }
 
 run_optimize_diagnostics() {

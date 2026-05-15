@@ -139,13 +139,17 @@ if [[ $# -eq 0 ]]; then
             echo "  $mole_file"
             echo "  $mo_file"
             echo ""
-            echo -ne "${PURPLE}${ICON_ARROW}${NC} Enable completion for ${GREEN}fish${NC}? ${GRAY}Enter confirm / Q cancel${NC}: "
+            echo -ne "${PURPLE}${ICON_ARROW}${NC} Enable completion for ${GREEN}fish${NC}? ${GRAY}Enter confirm / Q menu / Esc quit${NC}: "
             IFS= read -r -s -n1 key || key=""
             drain_pending_input
             echo ""
 
             case "$key" in
-                $'\e' | [Qq] | [Nn])
+                [Qq])
+                    echo -e "${YELLOW}Cancelled${NC}"
+                    return_to_main_menu
+                    ;;
+                $'\e' | [Nn])
                     echo -e "${YELLOW}Cancelled${NC}"
                     exit 0
                     ;;
@@ -248,13 +252,17 @@ if [[ $# -eq 0 ]]; then
         exit 0
     fi
 
-    echo -ne "${PURPLE}${ICON_ARROW}${NC} Enable completion for ${GREEN}${current_shell}${NC}? ${GRAY}Enter confirm / Q cancel${NC}: "
+    echo -ne "${PURPLE}${ICON_ARROW}${NC} Enable completion for ${GREEN}${current_shell}${NC}? ${GRAY}Enter confirm / Q menu / Esc quit${NC}: "
     IFS= read -r -s -n1 key || key=""
     drain_pending_input
     echo ""
 
     case "$key" in
-        $'\e' | [Qq] | [Nn])
+        [Qq])
+            echo -e "${YELLOW}Cancelled${NC}"
+            return_to_main_menu
+            ;;
+        $'\e' | [Nn])
             echo -e "${YELLOW}Cancelled${NC}"
             exit 0
             ;;
